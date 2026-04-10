@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Support\Facade\Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class AuthService {
@@ -25,10 +25,6 @@ class AuthService {
       'data' => [
         'user' => $user,
         'token' => $token,
-        'role' => $user->role,
-        'first_name' => $user->first_name,
-        'last_name' => $user->last_name,
-        'email' => $user->email
       ]
     ];
   }
