@@ -34,6 +34,7 @@ class AuthService {
       'username' => $data['username'],
       'email' => $data['email'],
       'password' => $data['password'],
+      'birth_date' => $data['birth_date'],
 
       // Formatting names: Uppercase first letter, lowercase the rest
       'first_name' => ucWords(strToLower($data['first_name'])),

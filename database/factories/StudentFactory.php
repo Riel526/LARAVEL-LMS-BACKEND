@@ -1,0 +1,33 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Student;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Student>
+ */
+class StudentFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'lrn' => $this->faker->numerify('##########'), 
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'middle_name' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'birth_date' => $this->faker->date('Y-m-d', '-11 years'), // Kids at least 5 years old
+            'grade_level' => $this->faker->randomElement(['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12']),
+            'section' => $this->faker->randomElement(['A', 'B', 'C']),
+            'gwa' => $this->faker->randomFloat(2, 75, 99),
+            'is_active' => $this->faker->boolean(90), 
+        ];
+    }
+}

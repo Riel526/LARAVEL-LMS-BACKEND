@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['first_name', 'last_name', 'middle_name', 'username', 'role', 'email', 'password'])]
+#[Fillable(['first_name', 'last_name', 'middle_name', 'username', 'role', 'email', 'password', 'birth_date'])]
 #[Hidden(['password', 'remember_token', 'email_verified_at', 'updated_at', 'created_at', 'id'])]
 class User extends Authenticatable
 {
