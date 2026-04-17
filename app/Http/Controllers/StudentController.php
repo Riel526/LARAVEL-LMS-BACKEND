@@ -29,11 +29,11 @@ class StudentController extends Controller
         'email' => 'required|email|unique:students,email',
         'grade_level' => 'required|string',
         'section' => 'required|string',
-        'is_active' => 'boolean',
+        'lrn' => 'required|string|unique:students,lrn',
         'birth_date' => 'required|date_format:Y/m/d|before:today',
         ]);
 
-        $student = $this->studentService->createStudent();
+        $student = $this->studentService->createStudent($validatedData);
 
         return response()->json([
             'status' => 'success',

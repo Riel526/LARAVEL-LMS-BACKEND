@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('lrn', 10)->unique();
             $table->string('first_name');
-            $table->string('middle_name');
+            $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('grade_level');

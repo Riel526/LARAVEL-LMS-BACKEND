@@ -19,7 +19,8 @@ class Student extends Model
         'section', 
         'is_active',
         'password',
-        'gwa'
+        'gwa',
+        'birth_date'
     ];
 
     protected $casts = [
