@@ -42,4 +42,27 @@ class StudentController extends Controller
             'data' => $student
         ], 201);
     }
+
+    public function update (Request $request, $id): JsonResponse {
+        $validatedData = $request->validate([
+        'lrn' => 'required|string|size:10|unique:students,lrn,' . $id,
+        'first_name' => 'required|string|max:255',
+        'middle_name' => 'nullable|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'email' => 'required|email|unique:students,email,' . $id,
+        'grade_level' => 'required|string',
+        'section' => 'required|string',
+        'birth_date' => 'required|date',
+        'is_active' => 'required|boolean'
+        ]);
+
+        $student = $this->studentService->updateStudent($id, $validatedData);
+
+        return response()->json([
+        'success' => true,
+        'code' => 200,
+        'data' => $student,
+        'message' => 'Student updated successfully'
+        ]);
+    }
 }

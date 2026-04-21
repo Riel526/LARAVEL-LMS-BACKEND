@@ -17,4 +17,5 @@ Route::prefix('auth')->group(function() {
 Route::prefix('students')->group(function() {
     Route::get('/get-students', [StudentController::class, 'index']);
     Route::post('/add-student', [StudentController::class, 'store']);
+    Route::put('/update-student/{id}', [StudentController::class, 'update']);
 });
