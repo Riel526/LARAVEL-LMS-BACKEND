@@ -35,4 +35,9 @@ class StudentService {
     ]);
   }
 
+  public function deleteStudent(int $id) {
+    $student = Student::findOrFail($id);
+    return $student->delete();
+  }
+
 }

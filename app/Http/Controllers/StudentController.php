@@ -65,4 +65,17 @@ class StudentController extends Controller
         'message' => 'Student updated successfully'
         ]);
     }
+
+        public function delete (int $id): JsonResponse {
+        $studentId = (int) $id;
+
+        $student = $this->studentService->deleteStudent($studentId);
+
+        return response()->json([
+        'success' => true,
+        'code' => 200,
+        'data' => $student,
+        'message' => 'Student deleted successfully'
+        ]);
+    }
 }
