@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -19,4 +20,11 @@ Route::prefix('students')->group(function() {
     Route::post('/add-student', [StudentController::class, 'store']);
     Route::put('/update-student/{id}', [StudentController::class, 'update']);
     Route::delete('/delete-student/{id}', [StudentController::class, 'delete']);
+});
+
+Route::prefix('subjects')->group(function() {
+    Route::get('/get-subjects', [SubjectController::class, 'index']);
+    Route::post('/add-subject', [SubjectController::class, 'store']);
+    Route::put('/update-subject/{id}', [SubjectController::class, 'update']);
+    Route::delete('/delete-subject/{id}', [SubjectController::class, 'delete']);
 });
