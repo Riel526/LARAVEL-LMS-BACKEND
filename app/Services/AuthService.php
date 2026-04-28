@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class AuthService {
 
@@ -30,13 +31,15 @@ class AuthService {
   }
 
   public function register(array $data) {
-    if (!isset($data['username']) || empty($data['username'])) {
+    return DB::transaction(function() use ($data) {
+
+      if (!isset($data['username']) || empty($data['username'])) {
         $cleanLastName = str_replace(' ', '', strtolower($data['last_name']));
         $birthYear = date('Y', strtotime($data['birth_date']));
         $data['username'] = $cleanLastName . $birthYear;
-    }
-    
-    $user = User::create([
+      }
+
+      $user = User::create([
       'username' => $data['username'],
       'email' => $data['email'],
       'password' => $data['password'] ?? 'default123',
@@ -49,11 +52,29 @@ class AuthService {
       'role' => $data['role']
     ]);
 
+    if ($data['role'] === 'student') {
+      $user->student()->create([
+          'lrn' => null,
+          'grade_level' => null,
+          'section' =>  null,
+          'gwa' => 0,
+          'is_active' => 1
+      ]);
+    } else if ($data['role'] === 'teacher') {
+        $user->teacher()->create([
+          'employee_id' => null,
+          'department' => null,
+          'specialization' => null,
+          'is_active' => 1
+      ]);
+    }
+
     return [
       'code' => 201,
       'message' => 'User Created Successfully',
       'user' => $user
     ];
+    });
   }
 
 }

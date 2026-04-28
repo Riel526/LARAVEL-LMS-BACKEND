@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
 use App\Services\StudentService;
+use App\Models\Student;
 
 class StudentController extends Controller
 {
@@ -48,12 +49,15 @@ class StudentController extends Controller
     }
 
     public function update (Request $request, $id): JsonResponse {
+        $student = Student::findOrFail($id);
+        $userId = $student->user_id;
+        
         $validatedData = $request->validate([
-        'lrn' => 'required|string|size:10|unique:students,lrn,' . $id,
+        'lrn' => "required|string|size:10|unique:students,lrn,{$id},student_id",
         'first_name' => 'required|string|max:255',
         'middle_name' => 'nullable|string|max:255',
         'last_name' => 'required|string|max:255',
-        'email' => 'required|email|unique:students,email,' . $id,
+        'email' => "required|email|unique:users,email,{$userId}",
         'grade_level' => 'required|string',
         'section' => 'required|string',
         'birth_date' => 'required|date',

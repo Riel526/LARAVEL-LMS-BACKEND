@@ -19,7 +19,8 @@ class StudentService {
 
     return Student::with('user')->get()->map(function ($student) {
       return [
-            'student_id'  => $student->student_id,
+            'student_id' => $student->student_id,
+            'user_id' => $student->user_id,
             'lrn'  => $student->lrn,
             'grade_level' => $student->grade_level,
             'section'  => $student->section,
