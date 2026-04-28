@@ -24,9 +24,13 @@ class StudentController extends Controller
 
     public function store (Request $request): JsonResponse {
         $validatedData = $request->validate([
+        // user fields
         'first_name' => 'required|string|max:255',
         'last_name' => 'required|string|max:255',
-        'email' => 'required|email|unique:students,email',
+        'email' => 'required|email|unique:users,email',
+
+
+        // student fields
         'grade_level' => 'required|string',
         'section' => 'required|string',
         'lrn' => 'required|string|unique:students,lrn',

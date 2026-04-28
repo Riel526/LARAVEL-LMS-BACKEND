@@ -30,10 +30,16 @@ class AuthService {
   }
 
   public function register(array $data) {
+    if (!isset($data['username']) || empty($data['username'])) {
+        $cleanLastName = str_replace(' ', '', strtolower($data['last_name']));
+        $birthYear = date('Y', strtotime($data['birth_date']));
+        $data['username'] = $cleanLastName . $birthYear;
+    }
+    
     $user = User::create([
       'username' => $data['username'],
       'email' => $data['email'],
-      'password' => $data['password'],
+      'password' => $data['password'] ?? 'default123',
       'birth_date' => $data['birth_date'],
 
       // Formatting names: Uppercase first letter, lowercase the rest
@@ -45,7 +51,8 @@ class AuthService {
 
     return [
       'code' => 201,
-      'message' => 'User Created Successfully'
+      'message' => 'User Created Successfully',
+      'user' => $user
     ];
   }
 
