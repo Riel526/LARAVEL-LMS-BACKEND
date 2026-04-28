@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Student;
+use App\Models\Teacher;
 
 #[Fillable(['first_name', 'last_name', 'middle_name', 'username', 'role', 'email', 'password', 'birth_date'])]
-#[Hidden(['password', 'remember_token', 'email_verified_at', 'updated_at', 'created_at', 'id'])]
+#[Hidden(['password', 'remember_token', 'email_verified_at', 'updated_at', 'created_at',])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -29,5 +31,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    
+    public function student() {
+        return $this->hasOne(Student::class);
+    }
+
+    public function teacher() {
+        return $this->hasOne(Teacher::class);
     }
 }

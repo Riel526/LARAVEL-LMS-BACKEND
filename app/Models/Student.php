@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Student extends Model
 {
@@ -13,22 +14,21 @@ class Student extends Model
 
     protected $fillable = [
         'lrn',
-        'first_name', 
-        'last_name', 
-        'middle_name', 
-        'email', 
+        'user_id',
         'grade_level', 
         'section', 
         'is_active',
         'password',
         'gwa',
-        'birth_date'
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
         'gwa' => 'float',
-        'birth_date' => 'date'
     ];
-    //
+    
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
