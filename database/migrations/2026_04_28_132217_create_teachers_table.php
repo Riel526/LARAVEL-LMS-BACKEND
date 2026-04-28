@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('teacher_id');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('employee_id')->unique();
-            $table->string('department');
+            $table->string('department')->nullable();
             $table->string('specialization')->nullable();
             $table->boolean('is_active')->default(1);
             $table->timestamps();
