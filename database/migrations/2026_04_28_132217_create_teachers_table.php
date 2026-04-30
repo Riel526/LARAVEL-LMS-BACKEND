@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('employee_id')->unique();
             $table->string('department')->nullable();
             $table->string('specialization')->nullable();
+            $table->string('status')->nullable();
             $table->boolean('is_active')->default(1);
             $table->timestamps();
         });

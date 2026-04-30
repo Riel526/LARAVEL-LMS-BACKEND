@@ -22,9 +22,13 @@ class DatabaseSeeder extends Seeder
         // App\Models\Student::factory(50)->create();
         // App\Models\Users::factory(50)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+
+        // seeder for Teacher/Student faker
+
+    //     \App\Models\User::factory(10)->create()->each(function ($user) {
+    //     \App\Models\Student::factory()->create([
+    //         'user_id' => $user->id
+    //     ]);
+    // });
     }
 }
