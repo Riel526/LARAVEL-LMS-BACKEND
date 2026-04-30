@@ -19,7 +19,7 @@ class StudentFactory extends Factory
     {
         return [
             'lrn' => $this->faker->numerify('##########'), 
-            'birth_date' => $this->faker->date('Y-m-d', '-11 years'), // Kids at least 5 years old
+            'user_id' => $this->faker->unique()->numberBetween(1, 1000),
             'grade_level' => $this->faker->randomElement(['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12']),
             'section' => $this->faker->randomElement(['A', 'B', 'C']),
             'gwa' => $this->faker->randomFloat(2, 75, 99),
