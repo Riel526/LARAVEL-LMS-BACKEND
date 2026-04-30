@@ -52,22 +52,22 @@ class AuthService {
       'role' => $data['role']
     ]);
 
-    if ($data['role'] === 'student') {
-      $user->student()->create([
-          'lrn' => null,
-          'grade_level' => null,
-          'section' =>  null,
-          'gwa' => 0,
-          'is_active' => 1
-      ]);
-    } else if ($data['role'] === 'teacher') {
-        $user->teacher()->create([
-          'employee_id' => null,
-          'department' => null,
-          'specialization' => null,
-          'is_active' => 1
-      ]);
-    }
+    // if ($data['role'] === 'student') {
+    //   $user->student()->create([
+    //       'lrn' => null,
+    //       'grade_level' => null,
+    //       'section' =>  null,
+    //       'gwa' => 0,
+    //       'is_active' => 1
+    //   ]);
+    // } else if ($data['role'] === 'teacher') {
+    //     $user->teacher()->create([
+    //       'employee_id' => null,
+    //       'department' => null,
+    //       'specialization' => null,
+    //       'is_active' => 1
+    //   ]);
+    // }
 
     return [
       'code' => 201,

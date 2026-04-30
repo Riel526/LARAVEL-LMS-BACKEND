@@ -69,6 +69,12 @@ class StudentService {
 
   public function deleteStudent(int $id) {
     $student = Student::findOrFail($id);
+    $user = $student->user;
+
+    if ($user) {
+      $user->delete();
+    }
+    
     return $student->delete();
   }
 
