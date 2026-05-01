@@ -28,7 +28,8 @@ class TeacherController extends Controller
             'email' => 'required|email|unique:users,email',
             'employee_id' => 'required|string|unique:teachers,employee_id',
             'department' => 'required|string', 
-            'status' => 'required|in:active,inactive,on-leave',
+            'birth_date' => 'required|date_format:Y/m/d|before:today',
+            'status' => 'required|string|max:255',
         ]);
 
         $teacher = $this->teacherService->addTeacher($validatedData);

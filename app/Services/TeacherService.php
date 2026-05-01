@@ -41,17 +41,19 @@ class TeacherService {
 
   }
 
-  public function createTeacher (array $data) {
+  public function addTeacher (array $data) {
 
     return DB::transaction(function () use ($data) {
       $data['role'] = 'teacher';
 
       $user = $this->authService->register($data); 
 
-      return $user->teacher()->create([
+      return Teacher::create([
           'employee_id' => $data['employee_id'],
           'department' => $data['department'],
           'specialization' => $data['specialization'] ?? null,
+          'status' => $data['status'],
+          'user_id' => $user['user']->id
       ]);
     });
 

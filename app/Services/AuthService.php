@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class AuthService {
 
@@ -35,7 +36,7 @@ class AuthService {
 
       if (!isset($data['username']) || empty($data['username'])) {
         $cleanLastName = str_replace(' ', '', strtolower($data['last_name']));
-        $birthYear = date('Y', strtotime($data['birth_date']));
+        $birthYear = Carbon::parse($data['birth_date'])->format('Y-m-d');
         $data['username'] = $cleanLastName . $birthYear;
       }
 
