@@ -60,24 +60,34 @@ class TeacherService {
   }
 
   public function updateTeacher(int $id, array $data) {
-    $student = Student::findOrFail($id);
+    DB::transaction(function() use($id, $data) {
+      $teacher = Teacher::findOrFail($id);
+        $teacher->update([
+        'employee_id' => $data['employee_id'],
+        'status' => $data['status'],
+        'specialization' => $data['specialization'],
+        'department' => $data['department'],
+        'is_active' => $data['is_active']
+      ]);
 
-    $student->update([
-      'lrn' => $data['lrn'],
-      'first_name' => $data['first_name'],
-      'middle_name' => $data['middle_name'] ?? null,
-      'last_name' => $data['last_name'],
-      'email' => $data['email'],
-      'grade_level' => $data['grade_level'],
-      'section' => $data['section'],
-      'birth_date' => $data['birth_date'],
-      'is_active' => $data['is_active'],
-    ]);
-  }
+        $teacher->user->update([
+          'first_name' => $data['first_name'],
+          'middle_name' => $data['middle_name'] ?? null,
+          'last_name' => $data['last_name'],
+          'email' => $data['email'],
+          'birth_date' => $data['birth_date'],
+        ]);
+      });
+    }
 
   public function deleteTeacher(int $id) {
-    $student = Student::findOrFail($id);
-    return $student->delete();
+    $teacher = Teacher::findOrFail($id);
+    $user = $teacher->user;
+
+    if ($user) {
+      $user->delete();
+    }
+    return $teacher->delete();
   }
 
 }
