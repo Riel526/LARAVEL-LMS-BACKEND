@@ -34,6 +34,25 @@ class AuthService {
   public function register(array $data) {
     return DB::transaction(function() use ($data) {
 
+      if (isset($data['username'])) {
+        if ($data['role'] === 'student') {
+          $user->student()->create([
+              'lrn' => null,
+              'grade_level' => null,
+              'section' =>  null,
+              'gwa' => 0,
+              'is_active' => 1
+          ]);
+      } else if ($data['role'] === 'teacher') {
+          $user->teacher()->create([
+            'employee_id' => null,
+            'department' => null,
+            'specialization' => null,
+            'is_active' => 1
+          ]);
+        }
+      }
+
       if (!isset($data['username']) || empty($data['username'])) {
         $cleanLastName = str_replace(' ', '', strtolower($data['last_name']));
         $birthYear = Carbon::parse($data['birth_date'])->format('Y-m-d');
@@ -52,23 +71,6 @@ class AuthService {
       'last_name' => ucWords(strToLower($data['last_name'])),
       'role' => $data['role']
     ]);
-
-    // if ($data['role'] === 'student') {
-    //   $user->student()->create([
-    //       'lrn' => null,
-    //       'grade_level' => null,
-    //       'section' =>  null,
-    //       'gwa' => 0,
-    //       'is_active' => 1
-    //   ]);
-    // } else if ($data['role'] === 'teacher') {
-    //     $user->teacher()->create([
-    //       'employee_id' => null,
-    //       'department' => null,
-    //       'specialization' => null,
-    //       'is_active' => 1
-    //   ]);
-    // }
 
     return [
       'code' => 201,
