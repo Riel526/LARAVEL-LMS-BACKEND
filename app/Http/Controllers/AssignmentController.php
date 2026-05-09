@@ -30,14 +30,15 @@ class AssignmentController extends Controller
         $validatedRequest = $request->validate([
             'teacher_id' => 'required|exists:users,id',
             'subject_id' => 'required|exists:subjects,subject_id',
-            'grade_level'  => 'required|string',
+            'grade_level'  => 'required|integer',
             'section' => 'required|string',
             'title' => 'required|string|max:255',
             'instructions' => 'nullable|string',
-            'due_date' => 'required|date',
+            'due_date' => 'required|date|after:now',
 
             'questions' => 'required|array|min:1',
             'questions.*.type' => 'required|in:identification,essay,multiple_choice',
+            'questions.*.question_text' => 'required|string',
             'questions.*.correct_answer'  => 'nullable|string',
             'questions.*.options' => 'nullable|array',
             'questions.*.points' => 'required|integer',

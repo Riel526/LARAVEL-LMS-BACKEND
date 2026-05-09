@@ -21,7 +21,7 @@ class AssignmentService {
 
   }
 
-  public function addAssignments ($data) {
+  public function addAssignment ($data) {
 
     DB::transaction(function() use ($data) {
       $assignment = Assignment::create([
@@ -35,12 +35,10 @@ class AssignmentService {
     ]);
 
     foreach ($data['questions'] as $questionData) {
-      $assignment->questions->create($questionData);
+      $assignment->questions()->create($questionData);
     }
 
     });
-
-    return $assignment;
 
   }
 

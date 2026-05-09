@@ -15,7 +15,16 @@ class AssignmentQuestion extends Model
         'options' => 'array'
     ]; 
 
+    protected $fillable = [
+        'assignment_id',
+        'type',
+        'question_text',
+        'correct_answer',
+        'options',
+        'points'
+    ];
+
     protected function assignment () {
-        $this->belongsTo(Assignment::class);
+        return $this->belongsTo(Assignment::class);
     }
 }

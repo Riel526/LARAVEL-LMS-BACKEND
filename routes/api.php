@@ -7,6 +7,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\AssignmentController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -43,5 +44,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('schedule')->group(function() {
         Route::get('/get-schedule', [ScheduleController::class, 'index']);
+    });
+
+    Route::prefix('assignments')->group(function() {
+        Route::post('/add-assignment', [AssignmentController::class, 'store']);
     });
 });

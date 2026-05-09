@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('assignments', function (Blueprint $table) {
         $table->id('assignment_id');
         $table->foreignId('teacher_id')->constrained('users');
-        $table->foreignId('subject_id')->constrained('subjects');
+        $table->foreignId('subject_id')->constrained('subjects', 'subject_id');
         $table->string('grade_level'); 
         $table->string('section');
         $table->string('title');
