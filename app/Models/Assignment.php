@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\AssignmentQuestion;
+use App\Models\Subject;
 
 class Assignment extends Model
 {
@@ -23,6 +24,10 @@ class Assignment extends Model
 
     public function questions() {
         return $this->hasMany(AssignmentQuestion::class);
+    }
+
+    public function subject() {
+        return $this->belongsTo(Subject::class);
     }
 
 }

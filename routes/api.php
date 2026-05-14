@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('assignments')->group(function() {
+        Route::post('/get-assignments', [AssignmentController::class, 'index']);
         Route::post('/add-assignment', [AssignmentController::class, 'store']);
     });
 });

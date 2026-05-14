@@ -18,7 +18,12 @@ class AssignmentService {
 
 
   public function getAssignments () {
+    $teacher_id = auth()->id();
 
+    return Assignment::where('teacher_id', $teacher_id)
+    ->with(['subject', 'questions'])
+    ->latest()
+    ->get();
   }
 
   public function addAssignment ($data) {
