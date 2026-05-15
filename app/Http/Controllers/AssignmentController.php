@@ -55,19 +55,42 @@ class AssignmentController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $assignment = $this->assignmentService->getAssignmentById($id);
+
+        return response()->json(
+            $assignment,
+            200
+        );
+    }
+
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Assignment $assignment)
+    public function update(Request $request, $id)
     {
-        //
+        $updatedAssignment = $this->assignmentService->updateAssignment($id, $request->all());
+
+        return response()->json([
+
+            'code' => 200,
+            'message' => 'Assignment updated successfully',
+            'data' => $updatedAssignment
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(Assignment $assignment)
+    public function delete($id)
     {
-        //
+        $this->assignmentService->deleteAssignment($id);
+
+        return response()->json([
+            'code' => 200,
+            'message' => 'Assignment Deleted Successfully'
+        ], 200);
     }
 }

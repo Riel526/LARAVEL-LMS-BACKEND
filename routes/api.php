@@ -48,6 +48,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('assignments')->group(function() {
         Route::post('/get-assignments', [AssignmentController::class, 'index']);
+        Route::get('/get-assignment/{id}', [AssignmentController::class, 'show']);
         Route::post('/add-assignment', [AssignmentController::class, 'store']);
+        Route::put('/update-assignment/{id}', [AssignmentController::class, 'update']);
+        Route::delete('/delete-assignment/{id}', [AssignmentController::class, 'delete']);
+        Route::post('/get-student-assignment', [AssignmentController::class, 'indexStudent']);
     });
 });

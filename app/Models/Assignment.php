@@ -12,6 +12,8 @@ class Assignment extends Model
     /** @use HasFactory<\Database\Factories\AssignmentFactory> */
     use HasFactory;
 
+    protected $primaryKey = 'assignment_id';
+
     protected $fillable = [
         'teacher_id',
         'subject_id',
@@ -23,7 +25,7 @@ class Assignment extends Model
     ];
 
     public function questions() {
-        return $this->hasMany(AssignmentQuestion::class);
+        return $this->hasMany(AssignmentQuestion::class, 'assignment_id', 'assignment_id');
     }
 
     public function subject() {

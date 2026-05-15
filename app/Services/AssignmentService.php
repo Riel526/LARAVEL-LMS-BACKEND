@@ -47,12 +47,44 @@ class AssignmentService {
 
   }
 
-  public function updateAssignment(int $id, array $data) {
+  public function getAssignmentById ($id) {
+    return Assignment::with(['questions'])->findOrFail($id);
+  }
 
+
+  public function updateAssignment(int $id, array $data) {
+    DB::transaction(function() use($id, $data){
+     $assignment = Assignment::findOrFail($id);
+
+     $assignment->update([
+      'title' => $data['title'],
+      'instructions' => $data['instructions'],
+      'due_date' => $data['due_date'],
+      'subject_id' => $data['subject_id'],
+      'grade_level' => $data['grade_level'],
+      'section' => $data['section'],
+     ]);
+
+     $assignment->questions()->delete();
+
+     foreach ($data['questions'] as $q) {
+        $assignment->questions()->create([
+            'type' => $q['type'],
+            'question_text' => $q['question_text'],
+            'correct_answer' => $q['correct_answer'] ?? null,
+            'options' => $q['options'] ?? null,
+            'points' => $q['points'] ?? 1,
+        ]);
+      }
+
+    return $assignment->load('questions');
+    });
     }
 
   public function deleteAssignment(int $id) {
+    $assignment = Assignment::findOrFail($id);
 
+    return $assignment->delete();
   }
 
 }
