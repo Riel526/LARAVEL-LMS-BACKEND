@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Models\Assignment;
 use Illuminate\Support\Facades\DB;
+use App\Models\Student;
 
 class AssignmentService {
 
@@ -86,5 +87,20 @@ class AssignmentService {
 
     return $assignment->delete();
   }
+
+    public function getStudentAssignment () {
+      $user = auth()->user();
+
+      $student = Student::where('user_id', $user->id)->first();
+
+      $assignment = Assignment::where('grade_level', $student->grade_level)
+      ->where('section', $student->section)
+      ->with(['subject', 'questions'])
+      ->latest()
+      ->get();
+
+
+      return $assignment;
+    }
 
 }

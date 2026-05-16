@@ -93,4 +93,8 @@ class AssignmentController extends Controller
             'message' => 'Assignment Deleted Successfully'
         ], 200);
     }
+
+    public function indexStudent() {
+        return $this->assignmentService->getStudentAssignment();
+    }
 }
