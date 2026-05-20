@@ -20,7 +20,6 @@ return new class extends Migration
         $table->string('title');
         $table->text('instructions')->nullable();
         $table->dateTime('due_date');
-        $table->tinyInteger('completed')->default(0);
         $table->timestamps();
         });
     }

@@ -97,4 +97,16 @@ class AssignmentController extends Controller
     public function indexStudent() {
         return $this->assignmentService->getStudentAssignment();
     }
+
+    public function submitAssignment(Request $request) {
+        $assignment = $this->assignmentService->submitAssignment($request->all());
+
+
+        return response()->json([
+            'code' => 200,
+            'status' => 'success',
+            'message' => 'Assignment submitted successfully!'
+        ], 200);
+
+    }
 }

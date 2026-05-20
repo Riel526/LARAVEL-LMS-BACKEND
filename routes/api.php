@@ -53,5 +53,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/update-assignment/{id}', [AssignmentController::class, 'update']);
         Route::delete('/delete-assignment/{id}', [AssignmentController::class, 'delete']);
         Route::post('/get-student-assignment', [AssignmentController::class, 'indexStudent']);
+        Route::post('/submit-assignment', [AssignmentController::class, 'submitAssignment']);
     });
 });
