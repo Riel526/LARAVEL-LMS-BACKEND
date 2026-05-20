@@ -109,4 +109,11 @@ class AssignmentController extends Controller
         ], 200);
 
     }
+
+    public function showResult($id) {
+        $assignment = $this->assignmentService->getSubmissionResult($id);
+
+        return $assignment;
+
+    }
 }

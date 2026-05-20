@@ -118,7 +118,7 @@ class AssignmentService {
         }
     }
 
-    return [$assignment];
+    return $assignmentsArray;
   }
 
   public function submitAssignment ($data) {
@@ -173,5 +173,32 @@ class AssignmentService {
         ]);
     });
   }
+
+
+  public function getSubmissionResult($assignmentId)
+{
+    $user = auth()->user();
+    $student = Student::where('user_id', $user->id)->first();
+
+    if (!$student) {
+        return response()->json(['message' => 'Student profile not found'], 404);
+    }
+    $assignment = Assignment::with(['subject', 'questions'])->findOrFail($assignmentId);
+
+    $submission = StudentAssignment::where('student_id', $student->student_id)
+        ->where('assignment_id', $assignmentId)
+        ->firstOrFail();
+
+    return response()->json([
+        'title'            => $assignment->title,
+        'instructions'     => $assignment->instructions,
+        'subject'          => $assignment->subject ? $assignment->subject->name : 'N/A',
+        'total_score'      => $submission->total_score,
+        'max_score'        => $submission->max_score,
+        'completed_at'     => $submission->completed_at,
+        'answers_snapshot' => $submission->answers_snapshot,
+        'questions'        => $assignment->questions
+    ]);
+}
 
 }
