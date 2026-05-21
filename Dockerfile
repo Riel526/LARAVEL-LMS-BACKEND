@@ -40,4 +40,4 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 EXPOSE 80
 
 # Spin up Nginx and the PHP process processor side-by-side
-CMD php artisan migrate --force && service nginx start && php-fpm
+CMD php artisan config:clear && php artisan migrate --force && service nginx start && php-fpm
