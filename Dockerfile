@@ -27,6 +27,8 @@ WORKDIR /var/www
 # Copy codebase contents directly into the container
 COPY . /var/www
 
+RUN rm -f /var/www/.env
+
 # Run composer installation for production (skips local dev dependencies)
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
