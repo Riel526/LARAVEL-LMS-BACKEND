@@ -20,7 +20,9 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        env('FRONTEND_URL', 'http://localhost:9000'), 
+        'http://localhost:9000', // for local
+        'http://localhost:5173', // vite
+        env('FRONTEND_URL'), // env
     ],
 
     'allowed_origins_patterns' => [],
