@@ -22,11 +22,13 @@ return [
     'allowed_origins' => [
         'http://localhost:9000', // for local
         'http://localhost:5173', // vite
-        'https://vue-3-lms-frontend-qmk4t5dpr-riel526s-projects.vercel.app', // live
+        'https://vue-3-lms-frontend.vercel.app', // live
         env('FRONTEND_URL'), // env
     ],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => [
+        '#^https://vue-3-lms-frontend-.*.vercel.app$#',
+    ],
 
     'allowed_headers' => ['*'],
 
