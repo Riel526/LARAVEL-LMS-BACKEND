@@ -7,6 +7,8 @@ use App\Services\SubjectService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\JsonResponse;
+use Cloudinary\Configuration\Configuration;
+use Cloudinary\Api\Upload\UploadApi;
 
 class SubjectController extends Controller
 {
@@ -32,8 +34,14 @@ class SubjectController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('subjects', 'public');
-        $validated['image_path'] = $path;
+        Configuration::instance(env('CLOUDINARY_URL'));
+
+        $uploadApi = new UploadApi();
+        $response = $uploadApi->upload($request->file('image')->getRealPath(), [
+            'folder' => 'subjects'
+        ]);
+
+        $validated['image_path'] = $response['secure_url'];
     }
 
         $subject = $this->subjectService->createSubject($validated);
