@@ -34,11 +34,11 @@ class SubjectController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-        Configuration::instance(env('CLOUDINARY_URL'));
+        Configuration::instance(config('services.cloudinary.url') ?? env('CLOUDINARY_URL'));
 
         $uploadApi = new UploadApi();
         $response = $uploadApi->upload($request->file('image')->getRealPath(), [
-            'folder' => 'subjects'
+            'folder' => env('APP_ENV', 'local') . '_subjects'
         ]);
 
         $validated['image_path'] = $response['secure_url'];
@@ -58,12 +58,21 @@ class SubjectController extends Controller
         $validated = $request->validate([
             'subject_code' => 'required|unique:subjects,subject_code,' . $id . ',subject_id',
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255', // Enforce description tracking
             'units' => 'required|integer|min:1',
             'category' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $updatedSubject = $this->subjectService->updateSubject($id, $validated, $request->file('image'), $request->boolean('remove_image'));
+        // Cast explicitly to boolean to handle the text '1' or true from FormData correctly
+        $removeImage = filter_var($request->input('remove_image', false), FILTER_VALIDATE_BOOLEAN);
+
+        $updatedSubject = $this->subjectService->updateSubject(
+            $id, 
+            $validated, 
+            $request->file('image'), 
+            $removeImage
+        );
 
         return response()->json([
             'code' => 200,
