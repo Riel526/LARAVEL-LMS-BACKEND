@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\Message;
 
 #[Fillable(['first_name', 'last_name', 'middle_name', 'username', 'role', 'email', 'password', 'birth_date'])]
 #[Hidden(['password', 'remember_token', 'email_verified_at', 'updated_at', 'created_at',])]
@@ -39,5 +40,9 @@ class User extends Authenticatable
 
     public function teacher() {
         return $this->hasOne(Teacher::class);
+    }
+
+    public function messages () {
+        return $this->hasMany(Message::class);
     }
 }
