@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Clear caches and run migrations
 php artisan config:clear
 php artisan migrate --force
