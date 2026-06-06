@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Services\ChatService;
+use App\Events\MessageSent;
 
 class ChatController extends Controller
 {
@@ -31,6 +32,10 @@ class ChatController extends Controller
 
     $message = $this->chatService->createMessage($validated, auth()->id());
 
-    return $message->load('user');
+    $message->load('user');
+    
+    broadcast(new MessageSent($message->toArray()))->toOthers();
+
+    return $message;
     }
 }
