@@ -8,6 +8,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\ChatController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -55,5 +56,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/get-student-assignment', [AssignmentController::class, 'indexStudent']);
         Route::post('/submit-assignment', [AssignmentController::class, 'submitAssignment']);
         Route::get('/get-assignment-result/{id}', [AssignmentController::class, 'showResult']);
+    });
+
+
+    Route::prefix('chat')->group(function() {
+        Route::get('/get-chats', [ChatController::class, 'index']);
+        Route::post('/add-chat', [ChatController::class, 'store']);
     });
 });
