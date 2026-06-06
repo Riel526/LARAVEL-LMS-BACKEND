@@ -42,4 +42,10 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 EXPOSE 80
 
 # Spin up Nginx and the PHP process processor side-by-side
-CMD php artisan config:clear && php artisan migrate --force && service nginx start && php-fpm
+
+# Copy the script into the container and make it executable
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Tell Docker to execute the script when the container boots up
+ENTRYPOINT ["entrypoint.sh"]
